@@ -27,7 +27,7 @@ model UserTraining {
 }
 
 model Training {
-  id        Int            @id @default(autoincrement())
+  id        Int                @id @default(autoincrement())
   name      String
   trainings UserTraining[]
   exercises TrainingExercise[]
@@ -42,27 +42,28 @@ model TrainingExercise {
 }
 
 model Exercise {
-  id         Int      @id @default(autoincrement())
-  name       String
-  description String
-  gifUrl     String
-  videoUrl   String
-  exercises  TrainingExercise[]
-  categories ExerciseCategory[]
-  bodyParts  ExerciseBodyPart[]
+  id           Int                @id @default(autoincrement())
+  name         String             @unique
+  description  String
+  gifUrl       String
+  videoUrl     String
+  exercises    TrainingExercise[]
+  categories   ExerciseCategory[]
+  muscleGroups MuscleGroup[]
 }
 
 model ExerciseCategory {
-  id         Int      @id @default(autoincrement())
-  name       String
-  exercises  Exercise[]
+  id        Int        @id @default(autoincrement())
+  name      String
+  exercises Exercise[]
 }
 
-model ExerciseBodyPart {
-  id         Int      @id @default(autoincrement())
-  name       String
-  exercises  Exercise[]
+model MuscleGroup {
+  id        Int        @id @default(autoincrement())
+  name      String
+  exercises Exercise[]
 }
+
 model Profile {
   id     Int    @id @default(autoincrement())
   bio    String

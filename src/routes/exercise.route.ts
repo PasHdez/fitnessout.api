@@ -16,6 +16,8 @@ class ExerciseRoute implements Routes {
       `${this.path}/:id`,
       this.exerciseController.getExerciseById
     );
+
+    this.router.post(`${this.path}`, this.exerciseController.addExercise);
   }
 }
 

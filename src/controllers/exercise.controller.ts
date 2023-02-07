@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import ExerciseService from "@services/exercise.service";
+import { CreateExerciseDto } from "@/dtos/exercise.dto";
 
 class ExerciseController {
   public exerciseService = new ExerciseService();
@@ -11,7 +12,30 @@ class ExerciseController {
     try {
       const { id } = req.params;
       const exercise = this.exerciseService.getExerciseById(Number(id));
-      res.json({ message: "Hello World!", id, ...exercise });
+      if (!exercise) {
+        res.sendStatus(404);
+        return;
+      }
+
+      res.json(exercise);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public addExercise = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const exerciseData: CreateExerciseDto = req.body;
+      const exercise = await this.exerciseService.addExercise(exerciseData);
+      if (!exercise) {
+        res.sendStatus(400);
+        return;
+      }
+      res.json(exercise);
     } catch (error) {
       next(error);
     }
