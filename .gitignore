@@ -105,3 +105,6 @@ dist
 prisma/dev.db
 prisma/dev.db-journal
 .env.development.local
+.env.production.local
+src/prisma/dev.db
+src/prisma/dev.db-journal
