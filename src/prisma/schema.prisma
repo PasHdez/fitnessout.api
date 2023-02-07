@@ -11,33 +11,47 @@ datasource db {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  email     String     @unique
+  id        Int            @id @default(autoincrement())
+  email     String         @unique
   name      String?
   profile   Profile?
   trainings UserTraining[]
 }
 
 model UserTraining {
-  id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
   trainingId Int
-  training  Training @relation(fields: [trainingId], references: [id])
+  training   Training @relation(fields: [trainingId], references: [id])
 }
 
 model Training {
-  id        Int        @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   name      String
-  exercises Exercise[]
   trainings UserTraining[]
+  exercises TrainingExercise[]
+}
+
+model TrainingExercise {
+  id         Int      @id @default(autoincrement())
+  training   Training @relation(fields: [trainingId], references: [id])
+  trainingId Int
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId Int
 }
 
 model Exercise {
   id         Int      @id @default(autoincrement())
   name       String
-  training   Training @relation(fields: [trainingId], references: [id])
-  trainingId Int
+  exercises  TrainingExercise[]
+  categories ExerciseCategory[]
+}
+
+model ExerciseCategory {
+  id         Int      @id @default(autoincrement())
+  name       String
+  exercises  Exercise[]
 }
 
 model Profile {
