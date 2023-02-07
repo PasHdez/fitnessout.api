@@ -48,6 +48,10 @@ class ExerciseService {
           })),
         },
       },
+      include: {
+        muscleGroups: true,
+        categories: true,
+      },
     });
     return newExercise;
   }
