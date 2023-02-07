@@ -17,7 +17,7 @@ class ExerciseService {
   }
 
   async addExercise(exercise: CreateExerciseDto): Promise<Exercise> {
-    const findExercise = await this.exercises.findUnique({
+    const findExercise = await this.exercises.findFirst({
       where: {
         name: exercise.name,
       },
