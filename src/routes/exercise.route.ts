@@ -3,7 +3,7 @@ import ExerciseController from "@controllers/exercise.controller";
 import { Routes } from "@interfaces/routes.interface";
 
 class ExerciseRoute implements Routes {
-  public path = "/exercise";
+  public path = "/exercises";
   public router = Router();
   public exerciseController = new ExerciseController();
 
