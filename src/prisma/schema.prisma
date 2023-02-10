@@ -54,7 +54,7 @@ model Exercise {
 
 model ExerciseCategory {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   exercises Exercise[]
 }
 
