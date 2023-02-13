@@ -34,11 +34,17 @@ model Training {
 }
 
 model TrainingExercise {
-  id         Int      @id @default(autoincrement())
-  training   Training @relation(fields: [trainingId], references: [id])
-  trainingId Int
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  exerciseId Int
+  id              Int      @id @default(autoincrement())
+  reps            Int
+  repsDuration    Int
+  rest            Int
+  restDuration    Int
+  sets            Int
+  restBetweenSets Int
+  training        Training @relation(fields: [trainingId], references: [id])
+  trainingId      Int
+  exercise        Exercise @relation(fields: [exerciseId], references: [id])
+  exerciseId      Int
 }
 
 model Exercise {
@@ -60,7 +66,7 @@ model ExerciseCategory {
 
 model MuscleGroup {
   id        Int        @id @default(autoincrement())
-  name      String
+  name      String     @unique
   exercises Exercise[]
 }
 
