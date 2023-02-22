@@ -11,29 +11,48 @@ datasource db {
 }
 
 model User {
-  id        Int            @id @default(autoincrement())
-  email     String         @unique
-  name      String?
-  profile   Profile?
-  trainings UserTraining[]
+  id            Int                @id @default(autoincrement())
+  email         String             @unique
+  name          String?
+  profile       Profile?
+  trainingPlans UserTrainingPlan[]
 }
 
-model UserTraining {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  trainingId Int
-  training   Training @relation(fields: [trainingId], references: [id])
+model UserTrainingPlan {
+  id             Int          @id @default(autoincrement())
+  user           User         @relation(fields: [userId], references: [id])
+  userId         Int
+  startDate      DateTime
+  trainingPlanId Int
+  trainingPlan   TrainingPlan @relation(fields: [trainingPlanId], references: [id])
+}
+
+model TrainingPlan {
+  id                Int                @id @default(autoincrement())
+  name              String
+  durationDays      Int
+  userTrainingPlans UserTrainingPlan[]
+  trainingDay       TrainingDay[]
+}
+
+model TrainingDay {
+  id             Int          @id @default(autoincrement())
+  day            Int
+  dayName        String
+  trainingPlanId Int
+  trainingPlan   TrainingPlan @relation(fields: [trainingPlanId], references: [id])
+  training       Training?    @relation(fields: [trainingId], references: [id])
+  trainingId     Int?
 }
 
 model Training {
-  id        Int                @id @default(autoincrement())
-  name      String
-  trainings UserTraining[]
-  exercises TrainingExercise[]
+  id          Int                @id @default(autoincrement())
+  name        String
+  exercises   ExerciseTraining[]
+  TrainingDay TrainingDay[]
 }
 
-model TrainingExercise {
+model ExerciseTraining {
   id              Int      @id @default(autoincrement())
   reps            Int
   repsDuration    Int
@@ -53,7 +72,7 @@ model Exercise {
   description  String
   gifUrl       String
   videoUrl     String
-  exercises    TrainingExercise[]
+  exercises    ExerciseTraining[]
   categories   ExerciseCategory[]
   muscleGroups MuscleGroup[]
 }
@@ -71,8 +90,10 @@ model MuscleGroup {
 }
 
 model Profile {
-  id     Int    @id @default(autoincrement())
+  id     Int      @id @default(autoincrement())
   bio    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
+  user   User     @relation(fields: [userId], references: [id])
+  dob    DateTime
+  gender String
+  userId Int      @unique
 }
